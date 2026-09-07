@@ -100,7 +100,7 @@ describe('LoginPage 測試', () => {
             await user.type(screen.getByLabelText('密碼'), '12345678');
             await user.click(screen.getByRole('button', { name: '登入' }));
 
-            expect(screen.getByText('密碼必須包含英文sdfweffergetdvretf字母和數字')).toBeInTheDocument();
+            expect(screen.getByText('密碼必須包含英文字母和數字')).toBeInTheDocument();
             expect(mockLogin).not.toHaveBeenCalled();
         });
     });
