@@ -52,7 +52,7 @@ describe('LoginPage 測試', () => {
     describe('前端元素', () => {
         it('渲染登入頁面基本元素（標題、輸入框、按鈕）', () => {
             renderWithRouter(<LoginPage />);
-            
+
             expect(screen.getByRole('heading', { name: '歡迎回來' })).toBeInTheDocument();
             expect(screen.getByLabelText('電子郵件')).toBeInTheDocument();
             expect(screen.getByLabelText('密碼')).toBeInTheDocument();
@@ -62,7 +62,7 @@ describe('LoginPage 測試', () => {
         it('未設定 API URL 環境變數時顯示測試帳號提示', () => {
             vi.stubEnv('VITE_API_URL', '');
             renderWithRouter(<LoginPage />);
-            
+
             expect(screen.getByText('測試帳號：任意 email 格式 / 密碼需包含英數且8位以上')).toBeInTheDocument();
         });
     });
@@ -71,7 +71,7 @@ describe('LoginPage 測試', () => {
         it('輸入無效的 Email 格式時顯示錯誤提示', async () => {
             const user = userEvent.setup();
             renderWithRouter(<LoginPage />);
-            
+
             await user.type(screen.getByLabelText('電子郵件'), 'invalid-email');
             await user.type(screen.getByLabelText('密碼'), 'Pass1234');
             await user.click(screen.getByRole('button', { name: '登入' }));
@@ -83,7 +83,7 @@ describe('LoginPage 測試', () => {
         it('密碼長度少於 8 個字元時顯示錯誤提示', async () => {
             const user = userEvent.setup();
             renderWithRouter(<LoginPage />);
-            
+
             await user.type(screen.getByLabelText('電子郵件'), 'test@example.com');
             await user.type(screen.getByLabelText('密碼'), 'Pass1');
             await user.click(screen.getByRole('button', { name: '登入' }));
@@ -95,12 +95,12 @@ describe('LoginPage 測試', () => {
         it('密碼未同時包含英文字母與數字時顯示錯誤提示', async () => {
             const user = userEvent.setup();
             renderWithRouter(<LoginPage />);
-            
+
             await user.type(screen.getByLabelText('電子郵件'), 'test@example.com');
             await user.type(screen.getByLabelText('密碼'), '12345678');
             await user.click(screen.getByRole('button', { name: '登入' }));
 
-            expect(screen.getByText('密碼必須包含英文字母和數字')).toBeInTheDocument();
+            expect(screen.getByText('密碼必須包含英文sdfweffergetdvretf字母和數字')).toBeInTheDocument();
             expect(mockLogin).not.toHaveBeenCalled();
         });
     });
@@ -116,7 +116,7 @@ describe('LoginPage 測試', () => {
             mockLogin.mockReturnValue(loginPromise);
 
             renderWithRouter(<LoginPage />);
-            
+
             const emailInput = screen.getByLabelText('電子郵件');
             const passwordInput = screen.getByLabelText('密碼');
             const submitButton = screen.getByRole('button', { name: '登入' });
@@ -140,7 +140,7 @@ describe('LoginPage 測試', () => {
             mockLogin.mockResolvedValue(undefined); // API 回傳成功
 
             renderWithRouter(<LoginPage />);
-            
+
             await user.type(screen.getByLabelText('電子郵件'), 'test@example.com');
             await user.type(screen.getByLabelText('密碼'), 'Pass1234');
             await user.click(screen.getByRole('button', { name: '登入' }));
@@ -161,7 +161,7 @@ describe('LoginPage 測試', () => {
             mockLogin.mockRejectedValue(mockError);
 
             renderWithRouter(<LoginPage />);
-            
+
             await user.type(screen.getByLabelText('電子郵件'), 'test@example.com');
             await user.type(screen.getByLabelText('密碼'), 'WrongPass123');
             await user.click(screen.getByRole('button', { name: '登入' }));
@@ -178,7 +178,7 @@ describe('LoginPage 測試', () => {
             mockLogin.mockRejectedValue(new Error('Network Error'));
 
             renderWithRouter(<LoginPage />);
-            
+
             await user.type(screen.getByLabelText('電子郵件'), 'test@example.com');
             await user.type(screen.getByLabelText('密碼'), 'WrongPass123');
             await user.click(screen.getByRole('button', { name: '登入' }));
